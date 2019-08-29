@@ -1,0 +1,12 @@
+{
+    "name": "andcarpi/popper",
+    "description": "Laravel Helper to implement Tooltips in your views.",
+    "authors": [
+        {
+            "name": "Anderson Carpi",
+            "email": "kustelac@yahoo.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
