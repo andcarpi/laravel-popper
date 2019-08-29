@@ -13,7 +13,7 @@ class PopperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('popper',function(){
+        $this->app->bind('popper', function () {
             return new Popper();
         });
     }
@@ -26,10 +26,10 @@ class PopperServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/popper.php' => config_path('popper.php')
+            __DIR__.'/../config/popper.php' => config_path('popper.php'),
         ], 'config');
         $this->publishes([
-            __DIR__.'/../resources/js' => public_path('vendor/laravel-popper')
+            __DIR__.'/../resources/js' => public_path('vendor/laravel-popper'),
         ], 'public');
     }
 }
