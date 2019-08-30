@@ -10,5 +10,20 @@
     ],
     "minimum-stability": "dev",
     "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "andcarpi\\Popper": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "andcarpi\\Popper\\PopperServiceProvider"
+            ],
+            "aliases": {
+                "Popper": "andcarpi\\Popper\\Facades\\Popper"
+            }
+        }
     }
 }
