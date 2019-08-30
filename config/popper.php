@@ -2,7 +2,20 @@
 
 return [
 
-
+    /**
+     * These files are needed, you can publish then and change the injection mode to asset
+     * or leave as they are, so the package will inject the CDN.
+     *
+     * If you are using themes that aren't the default, change themes to true.
+     *
+     * Don't forget to add the @include('popper') in your views.
+     */
+    'files' => [
+        'mode' => 'cdn',
+        'themes' => false,
+        'asset_paths' => ['vendor/laravel-popper/popper.min.js','vendor/laravel-popper/index.all.min.js'],
+        'themes_path' => ['vendor/laravel-popper/themes.js'],
+    ],
 
     /**
      * Values to use for all the tooltips, change if you want

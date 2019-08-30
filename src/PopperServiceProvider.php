@@ -28,8 +28,11 @@ class PopperServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/popper.php' => config_path('popper.php')
         ], 'config');
+
         $this->publishes([
             __DIR__.'/../resources/js' => public_path('vendor/laravel-popper')
         ], 'public');
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'popper');
     }
 }

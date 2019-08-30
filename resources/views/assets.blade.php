@@ -5,5 +5,8 @@
     @foreach(config('popper.files.asset_paths') as $assetpath)
         <script src="{{asset($assetpath)}}"></script>
     @endforeach
+    @foreach(config('popper.files.themes_path') as $themepath)
+        <script src="{{asset($themepath)}}"></script>
+    @endforeach
 @endif
 
