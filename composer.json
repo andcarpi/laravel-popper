@@ -1,5 +1,6 @@
 {
-    "name": "andcarpi/popper",
+    "name": "andcarpi/laravel-popper",
+    "type": "library",
     "description": "Laravel Helper to implement Tooltips in your views.",
     "authors": [
         {
@@ -8,5 +9,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+    }
 }
