@@ -28,26 +28,27 @@ When composer finish his job, add the Service Provider to your app.config in the
 
 ## Usage
 
-To use Popper in your view, you need to inject the assets needed! Use
- 
-```
-@include('popper::assets')
-``` 
-
-in the views you need tooltips, right before the body closing tag. 
+To use Popper in your view, you need to inject the assets needed! 
+Use ``@include('popper::assets')``  in the views you need tooltips, right before the body closing tag. 
 > ps: If you have a Master View, add the assets on it :)
 
 ```
-   @include(popper::assets)
+   @include('popper::assets')
 </body>
 ```
-
-
 
 Now, it's time to use it. To generate a simple tooltip, just use the Popper facade inside any html element.
 
 ```
 <button {{ Popper::pop('Tooltip!') }}>Click Me!</button
+```
+
+### Blade Directive
+
+Another usage example is to use the ``@popper`` blade directive! 
+
+```
+<span @popper(Span Tooltip!)> I'm a Span </span>
 ```
 
 ## Configuration
@@ -123,3 +124,7 @@ This package is powered by [Pooper.js](https://popper.js.org/) and [Tippy.js](ht
 ## License
 
 Laravel Popper is open-sourced software licensed under the MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+#### Todo
+
+* Danger / Warning / Success , etc pops

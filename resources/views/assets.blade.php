@@ -8,7 +8,7 @@
 @endif
 @if(config('popper.files.themes'))
     @foreach(config('popper.files.themes_path') as $themepath)
-        <script src="{{asset($themepath)}}?1"></script>
+        <script src="{{asset($themepath)}}"></script>
     @endforeach
 @endif
 
