@@ -15,6 +15,8 @@ composer require andcarpi/laravel-popper
 
 When composer finish his job, add the Service Provider to your app.config in the config folder:
 
+> Skip this if you use Laravel 5.5 and above.
+
 ```
 'providers' => [
     // ...
@@ -24,7 +26,9 @@ When composer finish his job, add the Service Provider to your app.config in the
 ],
 ```
 
-And to finish it, add the popper assets with
+## Usage
+
+To use Popper in your view, you need to inject the assets needed! Use
  
 ```
 @include('popper::assets')
@@ -38,7 +42,7 @@ in the views you need tooltips, right before the body closing tag.
 </body>
 ```
 
-## Usage
+
 
 Now, it's time to use it. To generate a simple tooltip, just use the Popper facade inside any html element.
 
@@ -100,10 +104,21 @@ Each tooltip can be customized using functions. They can also be chained!
 {{ Popper::delay(500,0)->pop('500ms to appear, but vanishes instantly!');  }}
 ```
 
+- Modify Tooltip Theme
+```
+// 'light', 'lightborder', 'google', 'translucent'
+// If you are using themes, enable themes at the config file! 
+{{ Popper::theme('light')->pop('Light Theming!');  }}
+```
+
 - Options Chain!
 ```
 {{ Popper::arrow()->size('large')->distance(50)->position('bottom')->pop('Arrow, Large, Far and at Bottom!'); }}
 ```
+
+##
+
+This package is powered by [Pooper.js](https://popper.js.org/) and [Tippy.js](https://atomiks.github.io/tippyjs/)
 
 ## License
 

@@ -153,7 +153,7 @@ class Popper
      */
     public function theme(string $theme = 'dark')
     {
-        $this->config['theme'] = (in_array($theme, ['dark', 'light', 'light-border', 'google'])) ? $theme : 'dark';
+        $this->config['theme'] = (in_array($theme, ['dark', 'light', 'light-border', 'google', 'translucent'])) ? $theme : 'dark';
 
         return $this;
     }
@@ -210,8 +210,8 @@ class Popper
     public function animate(string $mode = 'shift-away', int $show_duration = 275, int $hide_duration = 250)
     {
         $this->config['animation']['mode'] = (in_array($mode, ['shift-away', 'shift-toward', 'scale', 'fade'])) ? $mode : 'shift-away';
-        $this->config['placement']['show_duration'] = $show_duration;
-        $this->config['placement']['hide_duration'] = $hide_duration;
+        $this->config['animation']['show_duration'] = $show_duration;
+        $this->config['animation']['hide_duration'] = $hide_duration;
 
         return $this;
     }
@@ -241,12 +241,19 @@ class Popper
         if (trim($this->text) != '') {
             $tooltip = ' data-tippy="'.$this->text.'"';
 
+            //ARROW
             if ($this->config['arrow']['active']) {
                 $tooltip .= ' data-tippy-arrow="true"';
                 $tooltip .= $this->isDefault('arrow', 'type') ? '' : ' data-tippy-arrowType="'.$this->config['arrow']['type'].'"';
             }
+
+            //DISTANCE
             $tooltip .= $this->isDefault('distance') ? '' : ' data-tippy-distance="'.$this->config['distance'].'"';
+
+            //SIZE
             $tooltip .= $this->isDefault('size') ? '' : ' data-tippy-size="'.$this->config['size'].'"';
+
+            //THEME
             $tooltip .= $this->isDefault('theme') ? '' : ' data-tippy-theme="'.$this->config['theme'].'"';
 
             //PLACEMENT
@@ -274,6 +281,15 @@ class Popper
                     $tooltip .= '['.$this->config['delay']['show'].','.$this->config['delay']['hide'].']"';
                 }
             }
+
+            //ANIMATION MODE
+            if (! $this->isDefault('animation', 'mode')) {
+                $tooltip .= ' data-tippy-animation="'.$this->config['animation']['mode'].'"';
+            }
+            if (! $this->isDefault('animation', 'show_duration') or ! $this->isDefault('animation', 'hide_duration')) {
+                $tooltip .= ' data-tippy-duration="['.$this->config['animation']['show_duration'].','.$this->config['animation']['hide_duration'].']"';
+            }
+
             $this->setDefaultConfig();
             return new HtmlString($tooltip);
         }
