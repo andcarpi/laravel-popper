@@ -274,7 +274,7 @@ class Popper
                     $tooltip .= '['.$this->config['delay']['show'].','.$this->config['delay']['hide'].']"';
                 }
             }
-
+            $this->setDefaultConfig();
             return new HtmlString($tooltip);
         }
 

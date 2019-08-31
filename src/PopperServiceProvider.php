@@ -31,7 +31,7 @@ class PopperServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/js' => public_path('vendor/laravel-popper'),
-        ], 'public');
+        ], 'assets');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'popper');
     }
