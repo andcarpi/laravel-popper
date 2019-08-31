@@ -3,6 +3,9 @@
 This package provides an easy way to add tooltips in your Laravel blade views. Powered by Popper.js and Tippy.js.
 With this, you will not lose time getting them done. Install and use, out of the box. 
 
+![Laravel Popper](docs/welcome.gif)
+
+
 ## Install
 
 First things, first... Use composer to install the package:
