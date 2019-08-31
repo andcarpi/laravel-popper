@@ -1,7 +1,17 @@
 {
     "name": "andcarpi/laravel-popper",
     "type": "library",
-    "description": "Laravel Helper to implement Tooltips in your views.",
+    "license": "MIT",
+    "description": "A Easy to use Laravel Package, that allows you to generate tooltips in your blade views.",
+    "keywords": [
+        "laravel",
+        "laravel-package",
+        "popper",
+        "tippy",
+        "tooltip",
+        "blade",
+        "view"
+    ],
     "authors": [
         {
             "name": "Anderson Carpi",
