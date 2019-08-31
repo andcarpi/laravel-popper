@@ -59,7 +59,11 @@ class Popper
      */
     protected function setDefaultConfig()
     {
-        $this->config = config('popper.defaultConfig');
+        if (file_exists(config_path('popper.php'))) {
+            $this->config = config('popper.defaultConfig');
+        } else {
+            $this->config = $this->defaultconfig;
+        }
     }
 
     /**
