@@ -16,7 +16,7 @@ composer require andcarpi/laravel-popper
 
 ## Setup
 
-When composer finish his job, add the Service Provider to your app.config in the config folder:
+When composer finish his job, add the Service Provider and the facade to your app.config in the config folder:
 
 > Skip this if you use Laravel 5.5 and above.
 
@@ -27,6 +27,15 @@ When composer finish his job, add the Service Provider to your app.config in the
     // ...
     andcarpi\Popper\PopperServiceProvider::class,
 ],
+
+'aliases' => [
+    // ...
+    // List of Facades Aliases...
+    // ...
+    'Popper' => andcarpi\Popper\Facades\Popper::class,
+],
+
+
 ```
 
 ## Usage
@@ -115,6 +124,11 @@ Each tooltip can be customized using functions. They can also be chained!
 {{ Popper::theme('light')->pop('Light Theming!');  }}
 ```
 
+- Enable Tooltip Interactivity
+```
+{{ Popper::interactive()->pop('Select this text!');  }}
+```
+
 - Options Chain!
 ```
 {{ Popper::arrow()->size('large')->distance(50)->position('bottom')->pop('Arrow, Large, Far and at Bottom!'); }}
@@ -126,7 +140,7 @@ This package is powered by [Pooper.js](https://popper.js.org/) and [Tippy.js](ht
 
 ## License
 
-Laravel Popper is open-sourced software licensed under the MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+Laravel Popper is open-sourced software licensed under the MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 #### Todo
 

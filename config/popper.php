@@ -2,20 +2,38 @@
 
 return [
 
-    /**
-     * These files are needed, you can publish then and change the injection mode to asset
-     * or leave as they are, so the package will inject the CDN.
-     *
-     * If you are using themes that aren't the default, change themes to true.
-     *
-     * Don't forget to add the @include('popper') in your views.
-     */
-    'files' => [
+    /*
+    * These files are needed, you can publish then and change the injection mode to asset
+    * or leave as they are, so the package will inject the CDN.
+    *
+    * If another package or your front end is already injecting them, you can disable them.
+    *
+    * Don't forget to add the @include('popper::assets') in your views.
+    */
+    'popper' => [
+        'active' => true,
         'mode' => 'cdn',
-        'themes' => false,
-        'asset_paths' => ['vendor/laravel-popper/popper.min.js','vendor/laravel-popper/index.all.min.js'],
-        'themes_path' => ['vendor/laravel-popper/themes.js'],
+        'cdn' => 'https://unpkg.com/popper.js@1',
+        'asset' => 'vendor/laravel-popper/popper.min.js',
     ],
+    'tippy' => [
+        'active' => true,
+        'mode' => 'cdn',
+        'cdn' => 'https://unpkg.com/tippy.js@4',
+        'asset' => 'vendor/laravel-popper/index.all.min.js',
+    ],
+
+    /*
+     * Path location to the themes files.
+     * Popper will only inject the used themes.
+     */
+    'themes-path' => base_path() . '/vendor/andcarpi/laravel-popper/resources/css/',
+
+    /*
+     * If you have problems with small tooltips, you probably using bootstrap 3.
+     * Activate this configuration to inject some fixing css to your views.
+     */
+    'fix-bs3' => false,
 
     /*
      * Values to use for all the tooltips, change if you want
@@ -101,5 +119,10 @@ return [
             'show' => 0,
             'hide' => 20,
         ],
+
+        /*
+         * Enable the user to interact with the tooltip, to copy, or click elements.
+         */
+        'interactive' => false,
     ],
 ];

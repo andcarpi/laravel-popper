@@ -2,6 +2,7 @@
 
 namespace andcarpi\Popper;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\HtmlString;
 
 class Popper
@@ -37,7 +38,15 @@ class Popper
             'show' => 0,
             'hide' => 20,
         ],
+        'interactive' => false,
     ];
+
+    /*
+     * Themes used
+     */
+    private $themes = [];
+
+    private $themePath;
 
     /**
      * Configuration options.
@@ -52,6 +61,9 @@ class Popper
     {
         $this->text = '';
         $this->setDefaultConfig();
+        $this->themePath = File::isDirectory(config('popper.themes-path')) ?
+            config('popper.themes-path') :
+            base_path() . '/vendor/andcarpi/laravel-popper/resources/css/';
     }
 
     /**
@@ -59,7 +71,7 @@ class Popper
      */
     protected function setDefaultConfig()
     {
-        if (file_exists(config_path('popper.php'))) {
+        if (File::exists(config_path('popper.php'))) {
             $this->config = config('popper.defaultConfig');
         } else {
             $this->config = $this->defaultconfig;
@@ -235,62 +247,120 @@ class Popper
         return $this;
     }
 
+    /**
+     * Modify the tooltip triggers.
+     *
+     * @param bool $mouseenter
+     * @param bool $focus
+     * @param bool $click
+     * @return Popper
+     */
+    public function interactive()
+    {
+        $this->config['interactive'] = true;
+        return $this;
+    }
+
+    /*
+     * Return true if any Popper used a theme
+     */
+    public function hasThemes() {
+        return (count($this->themes) > 0);
+    }
+
+    /*
+     * Return css injection for the used themes
+     */
+    public function injectThemes() {
+        if ($this->hasThemes()) {
+            $scripts = '<script type="text/javascript">';
+            foreach ($this->themes as $theme) {
+                if (file_exists($this->themePath . $theme . '.css')) {
+                    $themecss = File::get($this->themePath . $theme . '.css');
+                    $scripts .= 'injectCSS("' . $themecss . '");';
+                }
+            }
+            $scripts .= '</script>';
+            return new HtmlString($scripts);
+        }
+    }
+
+    private function generateOptions() {
+
+        $options = '';
+
+        //ARROW
+        if ($this->config['arrow']['active']) {
+            $options .= ' data-tippy-arrow="true"';
+            $options .= $this->isDefault('arrow', 'type') ? '' : ' data-tippy-arrowType="'.$this->config['arrow']['type'].'"';
+        }
+
+        //DISTANCE
+        $options .= $this->isDefault('distance') ? '' : ' data-tippy-distance="'.$this->config['distance'].'"';
+
+        //SIZE
+        $options .= $this->isDefault('size') ? '' : ' data-tippy-size="'.$this->config['size'].'"';
+
+        //THEME
+        if (!$this->isDefault('theme')) {
+            $options .= ' data-tippy-theme="'.$this->config['theme'].'"';
+            if (!in_array($this->config['theme'], $this->themes)) {
+                $this->themes[] = $this->config['theme'];
+            }
+        }
+
+        //PLACEMENT
+        if ($this->isDefault('placement', 'position')) {
+            $options .= $this->isDefault('placement', 'alignment') ? '' : ' data-tippy-placement="'.$this->config['placement']['position'].'-'.$this->config['placement']['alignment'].'"';
+        } else {
+            $options .= $this->isDefault('placement', 'alignment') ? ' data-tippy-placement="'.$this->config['placement']['position'].'"' : ' data-tippy-placement="'.$this->config['placement']['position'].'-'.$this->config['placement']['alignment'].'"';
+        }
+
+        //TRIGGER
+        if (! $this->isDefault('trigger')) {
+            $options .= ' data-tippy-trigger="';
+            $options .= $this->config['trigger']['mouseenter'] ? 'mouseenter' : '';
+            $options .= $this->config['trigger']['focus'] ? ' focus' : '';
+            $options .= $this->config['trigger']['click'] ? ' click' : '';
+            $options .= '"';
+        }
+
+        //DELAY
+        if (! $this->isDefault('delay')) {
+            $options .= ' data-tippy-delay="';
+            if ($this->config['delay']['show'] == $this->config['delay']['hide']) {
+                $options .= $this->config['delay']['show'].'"';
+            } else {
+                $options .= '['.$this->config['delay']['show'].','.$this->config['delay']['hide'].']"';
+            }
+        }
+
+        //ANIMATION MODE
+        if (! $this->isDefault('animation', 'mode')) {
+            $options .= ' data-tippy-animation="'.$this->config['animation']['mode'].'"';
+        }
+        if (! $this->isDefault('animation', 'show_duration') or ! $this->isDefault('animation', 'hide_duration')) {
+            $options .= ' data-tippy-duration="['.$this->config['animation']['show_duration'].','.$this->config['animation']['hide_duration'].']"';
+        }
+
+        //INTERACTIVITY
+        if (!$this->isDefault('interactive')) {
+            $options .= ' data-tippy-interactive="true"';
+        }
+
+        return $options;
+    }
+
     public function pop(string $text)
     {
         $this->text = $text;
         if (trim($this->text) != '') {
             $tooltip = ' data-tippy="'.$this->text.'"';
 
-            //ARROW
-            if ($this->config['arrow']['active']) {
-                $tooltip .= ' data-tippy-arrow="true"';
-                $tooltip .= $this->isDefault('arrow', 'type') ? '' : ' data-tippy-arrowType="'.$this->config['arrow']['type'].'"';
-            }
-
-            //DISTANCE
-            $tooltip .= $this->isDefault('distance') ? '' : ' data-tippy-distance="'.$this->config['distance'].'"';
-
-            //SIZE
-            $tooltip .= $this->isDefault('size') ? '' : ' data-tippy-size="'.$this->config['size'].'"';
-
-            //THEME
-            $tooltip .= $this->isDefault('theme') ? '' : ' data-tippy-theme="'.$this->config['theme'].'"';
-
-            //PLACEMENT
-            if ($this->isDefault('placement', 'position')) {
-                $tooltip .= $this->isDefault('placement', 'alignment') ? '' : ' data-tippy-placement="'.$this->config['placement']['position'].'-'.$this->config['placement']['alignment'].'"';
-            } else {
-                $tooltip .= $this->isDefault('placement', 'alignment') ? ' data-tippy-placement="'.$this->config['placement']['position'].'"' : ' data-tippy-placement="'.$this->config['placement']['position'].'-'.$this->config['placement']['alignment'].'"';
-            }
-
-            //TRIGGER
-            if (! $this->isDefault('trigger')) {
-                $tooltip .= ' data-tippy-trigger="';
-                $tooltip .= $this->config['trigger']['mouseenter'] ? 'mouseenter' : '';
-                $tooltip .= $this->config['trigger']['focus'] ? ' focus' : '';
-                $tooltip .= $this->config['trigger']['click'] ? ' click' : '';
-                $tooltip .= '"';
-            }
-
-            //DELAY
-            if (! $this->isDefault('delay')) {
-                $tooltip .= ' data-tippy-delay="';
-                if ($this->config['delay']['show'] == $this->config['delay']['hide']) {
-                    $tooltip .= $this->config['delay']['show'].'"';
-                } else {
-                    $tooltip .= '['.$this->config['delay']['show'].','.$this->config['delay']['hide'].']"';
-                }
-            }
-
-            //ANIMATION MODE
-            if (! $this->isDefault('animation', 'mode')) {
-                $tooltip .= ' data-tippy-animation="'.$this->config['animation']['mode'].'"';
-            }
-            if (! $this->isDefault('animation', 'show_duration') or ! $this->isDefault('animation', 'hide_duration')) {
-                $tooltip .= ' data-tippy-duration="['.$this->config['animation']['show_duration'].','.$this->config['animation']['hide_duration'].']"';
-            }
+            $tooltip .= $this->generateOptions();
 
             $this->setDefaultConfig();
+            
             return new HtmlString($tooltip);
         }
 
