@@ -27,7 +27,7 @@ return [
      * Path location to the themes files.
      * Popper will only inject the used themes.
      */
-    'themes-path' => base_path() . '/vendor/andcarpi/laravel-popper/resources/css/',
+    'themes-path' => base_path().'/vendor/andcarpi/laravel-popper/resources/css/',
 
     /*
      * If you have problems with small tooltips, you probably using bootstrap 3.

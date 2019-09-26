@@ -2,8 +2,8 @@
 
 namespace andcarpi\Popper;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\File;
 
 class Popper
 {
@@ -63,7 +63,7 @@ class Popper
         $this->setDefaultConfig();
         $this->themePath = File::isDirectory(config('popper.themes-path')) ?
             config('popper.themes-path') :
-            base_path() . '/vendor/andcarpi/laravel-popper/resources/css/';
+            base_path().'/vendor/andcarpi/laravel-popper/resources/css/';
     }
 
     /**
@@ -264,14 +264,16 @@ class Popper
     /*
      * Return true if any Popper used a theme
      */
-    public function hasThemes() {
+    public function hasThemes()
+    {
         return (count($this->themes) > 0);
     }
 
     /*
      * Return css injection for the used themes
      */
-    public function injectThemes() {
+    public function injectThemes()
+    {
         if ($this->hasThemes()) {
             $scripts = '<script type="text/javascript">';
             foreach ($this->themes as $theme) {
@@ -285,7 +287,8 @@ class Popper
         }
     }
 
-    private function generateOptions() {
+    private function generateOptions()
+    {
 
         $options = '';
 
@@ -302,9 +305,9 @@ class Popper
         $options .= $this->isDefault('size') ? '' : ' data-tippy-size="'.$this->config['size'].'"';
 
         //THEME
-        if (!$this->isDefault('theme')) {
+        if (! $this->isDefault('theme')) {
             $options .= ' data-tippy-theme="'.$this->config['theme'].'"';
-            if (!in_array($this->config['theme'], $this->themes)) {
+            if (! in_array($this->config['theme'], $this->themes)) {
                 $this->themes[] = $this->config['theme'];
             }
         }
@@ -344,7 +347,7 @@ class Popper
         }
 
         //INTERACTIVITY
-        if (!$this->isDefault('interactive')) {
+        if (! $this->isDefault('interactive')) {
             $options .= ' data-tippy-interactive="true"';
         }
 
@@ -360,27 +363,30 @@ class Popper
             $tooltip .= $this->generateOptions();
 
             $this->setDefaultConfig();
-            
+
             return new HtmlString($tooltip);
         }
 
         return '';
     }
 
-    public function danger(string $text) {
+    public function danger(string $text)
+    {
         return $this->theme('danger')->pop($text);
     }
 
-    public function warning(string $text) {
+    public function warning(string $text)
+    {
         return $this->theme('warning')->pop($text);
     }
 
-    public function info(string $text) {
+    public function info(string $text)
+    {
         return $this->theme('info')->pop($text);
     }
 
-    public function success(string $text) {
+    public function success(string $text)
+    {
         return $this->theme('success')->pop($text);
     }
-
 }
