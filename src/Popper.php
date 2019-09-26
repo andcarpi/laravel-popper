@@ -266,7 +266,7 @@ class Popper
      */
     public function hasThemes()
     {
-        return (count($this->themes) > 0);
+        return count($this->themes) > 0;
     }
 
     /*
@@ -277,9 +277,9 @@ class Popper
         if ($this->hasThemes()) {
             $scripts = '<script type="text/javascript">';
             foreach ($this->themes as $theme) {
-                if (file_exists($this->themePath . $theme . '.css')) {
-                    $themecss = File::get($this->themePath . $theme . '.css');
-                    $scripts .= 'injectCSS("' . $themecss . '"); ';
+                if (file_exists($this->themePath.$theme.'.css')) {
+                    $themecss = trim(File::get($this->themePath.$theme.'.css'));
+                    $scripts .= 'injectCSS("'.$themecss.'"); ';
                 }
             }
             $scripts .= '</script>';
@@ -289,7 +289,6 @@ class Popper
 
     private function generateOptions()
     {
-
         $options = '';
 
         //ARROW
