@@ -119,9 +119,18 @@ Each tooltip can be customized using functions. They can also be chained!
 
 - Modify Tooltip Theme
 ```
-// 'light', 'lightborder', 'google', 'translucent'
+// 'light', 'lightborder', 'google', 'translucent', 'success', 'danger', 'warning', 'info'
+// For the success, danger, warning, info, you can also use the Helpers (see next info)
 // If you are using themes, enable themes at the config file! 
 {{ Popper::theme('light')->pop('Light Theming!');  }}
+```
+
+- Simple Success, Danger, Warning, Info Popup Helpers
+```
+{{ Popper::success('Success Message!") }}
+{{ Popper::danger('Danger Message!") }}
+{{ Popper::warning('Warning Message!") }}
+{{ Popper::info('Info Message!") }}
 ```
 
 - Enable Tooltip Interactivity
@@ -144,4 +153,6 @@ Laravel Popper is open-sourced software licensed under the MIT License (MIT). Pl
 
 #### Todo
 
-* Danger / Warning / Success , etc pops
+[x] Danger / Warning / Success , etc pops
+
+[] Custom Theming

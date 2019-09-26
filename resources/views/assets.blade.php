@@ -5,11 +5,16 @@
     @endif
     {{ Popper::injectThemes() }}
 @endif
-{{--POPPER--}}
-@if(config('popper.popper.active'))
-    <script @if(config('popper.popper.mode') == 'cdn') src="{{config('popper.popper.cdn')}}" @else src="{{asset(config('popper.popper.asset'))}}" @endif></script>
-@endif
-{{--TIPPY--}}
-@if(config('popper.tippy.active'))
-    <script @if(config('popper.tippy.mode') == 'cdn') src="{{config('popper.tippy.cdn')}}" @else src="{{asset(config('popper.tippy.asset'))}}" @endif></script>
+@if(! Config::has('popper'))
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@4"></script>
+@else
+    {{--POPPER--}}
+    @if(config('popper.popper.active'))
+        <script @if(config('popper.popper.mode') == 'cdn') src="{{config('popper.popper.cdn')}}" @else src="{{asset(config('popper.popper.asset'))}}" @endif></script>
+    @endif
+    {{--TIPPY--}}
+    @if(config('popper.tippy.active'))
+        <script @if(config('popper.tippy.mode') == 'cdn') src="{{config('popper.tippy.cdn')}}" @else src="{{asset(config('popper.tippy.asset'))}}" @endif></script>
+    @endif
 @endif

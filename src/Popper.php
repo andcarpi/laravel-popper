@@ -165,7 +165,7 @@ class Popper
      */
     public function theme(string $theme = 'dark')
     {
-        $this->config['theme'] = (in_array($theme, ['dark', 'light', 'light-border', 'google', 'translucent'])) ? $theme : 'dark';
+        $this->config['theme'] = (in_array($theme, ['dark', 'light', 'light-border', 'google', 'translucent', 'danger', 'warning', 'info', 'success'])) ? $theme : 'dark';
 
         return $this;
     }
@@ -277,7 +277,7 @@ class Popper
             foreach ($this->themes as $theme) {
                 if (file_exists($this->themePath . $theme . '.css')) {
                     $themecss = File::get($this->themePath . $theme . '.css');
-                    $scripts .= 'injectCSS("' . $themecss . '");';
+                    $scripts .= 'injectCSS("' . $themecss . '"); ';
                 }
             }
             $scripts .= '</script>';
@@ -366,4 +366,21 @@ class Popper
 
         return '';
     }
+
+    public function danger(string $text) {
+        return $this->theme('danger')->pop($text);
+    }
+
+    public function warning(string $text) {
+        return $this->theme('warning')->pop($text);
+    }
+
+    public function info(string $text) {
+        return $this->theme('info')->pop($text);
+    }
+
+    public function success(string $text) {
+        return $this->theme('success')->pop($text);
+    }
+
 }
